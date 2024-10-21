@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<link rel="stylesheet" href="/css/my-sites.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<body>
+  <%- include('partials/_header.ejs') %>
+  <main role="main" class="container mt-4">
+    <h1 class="flashy-title pulse-animation">My Awesome Websites</h1>
+
+    <div class="add-website-form">
+      <h2>Create a New Website</h2>
+      <form action="/my-sites" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Website Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="context" class="form-label">What's your website about?</label>
+          <textarea class="form-control" id="context" name="context" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block pulse-animation">Create My Website</button>
+      </form>
+    </div>
+
+    <h2 class="mt-4 mb-4">Your Fantastic Websites</h2>
+    <div class="row">
+      <% if (websites.length > 0) { %>
+        <% websites.forEach(website => { %>
+          <div class="col-md-6 mb-4">
+            <div class="card website-card">
+              <div class="card-body">
+                <h5 class="card-title"><%= website.name %></h5>
+                <p class="card-text"><%= website.context %></p>
+                <div class="website-actions">
+                  <a href="/websites/<%= website._id %>/pages" class="btn btn-primary">Manage Pages</a>
+                  <a href="/my-sites/edit/<%= website._id %>" class="btn btn-secondary">Edit Details</a>
+                  <button class="btn btn-danger delete-website" data-id="<%= website._id %>">Delete</button>
+                  <a href="/my-sites/<%= website._id %>/customize" class="btn btn-info">Customize</a>
+                  <a href="/websites/<%= website._id %>/header-footer" class="btn btn-success">Header/Footer</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="col-12">
+          <p class="text-center">You haven't created any websites yet. Let's get started!</p>
+        </div>
+      <% } %>
+    </div>
+  </main>
+  <%- include('partials/_footer.ejs') %>
+  <script src="/js/my-sites.js"></script>
+</body>
+</html>

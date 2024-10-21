@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<body>
+  <%- include('partials/_header.ejs') %>
+  <main role="main" class="container mt-4">
+    <h1>Edit Website</h1>
+    <form action="/my-sites/edit/<%= website._id %>" method="POST">
+      <div class="mb-3">
+        <label for="name" class="form-label">Website Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="<%= website.name %>" required>
+      </div>
+      <div class="mb-3">
+        <label for="context" class="form-label">Website Context</label>
+        <textarea class="form-control" id="context" name="context" rows="3" required><%= website.context %></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Update Website</button>
+    </form>
+  </main>
+  <%- include('partials/_footer.ejs') %>
+</body>
+</html>

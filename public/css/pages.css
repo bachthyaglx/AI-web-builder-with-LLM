@@ -1,0 +1,30 @@
+.card {
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.btn-group .btn {
+  flex: 1;
+  margin: 2px;
+}
+
+h1, h2 {
+  color: #333;
+  font-weight: 300;
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+  border-left: 3px solid #007bff;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs', { title: `${website.name} - Header/Footer Editor` }) %>
+<link rel="stylesheet" href="/css/header-footer-spinner.css">
+<link rel="stylesheet" href="/css/header-footer-editor.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<body>
+  <%- include('partials/_header.ejs') %>
+  <div class="container mt-4">
+    <div class="editor-container">
+      <h1 class="editor-title pulse-animation"><%= website.name %> - Header/Footer Editor</h1>
+      <div id="headerEditor" class="editor-section">
+        <h2>Header</h2>
+        <div class="btn-group">
+          <% if (website.header && website.header.content) { %>
+            <button id="editHeaderBtn" class="btn btn-primary btn-lg btn-flashy">Edit Header</button>
+            <button id="previewHeaderBtn" class="btn btn-info btn-lg btn-flashy">Preview Header</button>
+          <% } else { %>
+            <button id="generateHeaderBtn" class="btn btn-success btn-lg btn-flashy pulse-animation">Generate Header</button>
+            <button id="previewHeaderBtn" class="btn btn-info btn-lg btn-flashy" style="display: none;">Preview Header</button>
+          <% } %>
+        </div>
+      </div>
+      <div id="footerEditor" class="editor-section">
+        <h2>Footer</h2>
+        <div class="btn-group">
+          <% if (website.footer && website.footer.content) { %>
+            <button id="editFooterBtn" class="btn btn-primary btn-lg btn-flashy">Edit Footer</button>
+            <button id="previewFooterBtn" class="btn btn-info btn-lg btn-flashy">Preview Footer</button>
+          <% } else { %>
+            <button id="generateFooterBtn" class="btn btn-success btn-lg btn-flashy pulse-animation">Generate Footer</button>
+            <button id="previewFooterBtn" class="btn btn-info btn-lg btn-flashy" style="display: none;">Preview Footer</button>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/_footer.ejs') %>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/js/headerFooterEditor.js"></script>
+  <script id="websiteData" type="application/json">
+    <%- JSON.stringify(website) %>
+  </script>
+  <div id="headerFooterSpinner" class="header-footer-spinner-overlay" style="display: none;">
+    <div class="header-footer-spinner"></div>
+  </div>
+</body>
+</html>

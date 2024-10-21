@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+  <body>
+    <%- include('partials/_header.ejs') %>
+    <main role="main" class="container mt-4">
+      <div class="text-center">
+        <h1>PythaPress</h1>
+        <% if (!apiKeySet) { %>
+          <div class="alert alert-warning mt-4" role="alert">
+            Your OpenAI API key is not set. Please set it in your <a href="/profile" class="alert-link">Profile</a> page to use all features of PythaPress.
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </body>
+  <%- include('partials/_footer.ejs') %>
+  <script src="/js/main.js"></script>
+</html>

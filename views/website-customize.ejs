@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<body>
+  <%- include('partials/_header.ejs') %>
+  <div class="container mt-4">
+    <h1><%= website.name %> - Website Customization</h1>
+    <form id="customizationForm">
+      <div class="mb-3">
+        <label for="targetAudience" class="form-label">Who is your target audience?</label>
+        <textarea class="form-control" id="targetAudience" rows="3"><%= website.customization.targetAudience %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="mainGoal" class="form-label">What is the main goal of your website?</label>
+        <textarea class="form-control" id="mainGoal" rows="3"><%= website.customization.mainGoal %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="uniqueSellingPoint" class="form-label">What is your unique selling point?</label>
+        <textarea class="form-control" id="uniqueSellingPoint" rows="3"><%= website.customization.uniqueSellingPoint %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="brandPersonality" class="form-label">Describe your brand's personality:</label>
+        <textarea class="form-control" id="brandPersonality" rows="3"><%= website.customization.brandPersonality %></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Customization</button>
+    </form>
+  </div>
+  <%- include('partials/_footer.ejs') %>
+  <script>
+    console.log('Website customization data in template:', <%- JSON.stringify(website.customization) %>);
+  </script>
+  <script src="/js/website-customize.js"></script>
+</body>
+</html>

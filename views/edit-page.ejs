@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<body>
+  <%- include('partials/_header.ejs') %>
+  <div class="container mt-4">
+    <h1>Edit Page</h1>
+    <form action="/websites/<%= websiteId %>/pages/<%= page._id %>" method="POST">
+      <div class="mb-3">
+        <input type="text" class="form-control" name="name" value="<%= page.name %>" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="slug" value="<%= page.slug %>" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="seoTitle" value="<%= page.seoTitle %>">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="seoDescription" value="<%= page.seoDescription %>">
+      </div>
+      <button type="submit" class="btn btn-primary">Update Page</button>
+    </form>
+  </div>
+  <%- include('partials/_footer.ejs') %>
+</body>
+</html>

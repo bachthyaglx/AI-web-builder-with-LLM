@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs', { title: page ? `${page.name} - ${website.name} - PythaPress` : `${website.name} - PythaPress` }) %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
+<% console.log('Title passed to _head.ejs:', page ? `${page.name} - ${website.name} - PythaPress` : `${website.name} - PythaPress`); %>
+<body>
+  <%- include('partials/_header.ejs') %>
+  <div class="container-fluid mt-4">
+    <div class="builder-container">
+      <div id="inputColumn" class="builder-input expanded">
+        <h1><%= website.name %></h1>
+        <h2>Add New Section</h2>
+        <form id="addSectionForm">
+          <textarea class="form-control" id="sectionInput" rows="5" placeholder="Describe the section you want to add..."></textarea>
+          <button type="submit" class="btn btn-primary mt-2 flashy-btn">
+            <i class="fas fa-plus-circle"></i> Add Section
+          </button>
+        </form>
+        <div id="inputHelp" class="mt-3">
+          <h5>Tips for best results:</h5>
+          <ul>
+            <li>Be specific about the content you want</li>
+            <li>Mention desired layout (e.g., two columns, centered)</li>
+            <li>Specify any color preferences</li>
+          </ul>
+        </div>
+      </div>
+      <div id="previewColumn" class="builder-preview">
+        <div id="previewArea" class="w-100 border"></div>
+      </div>
+      <button id="toggleInputBtn" class="btn btn-sm btn-secondary">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+  </div>
+  <%- include('partials/_footer.ejs') %>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/js/website-builder.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
+  <script id="sectionTemplate" type="text/template">
+    <div class="section" data-section-id="{{sectionReference}}">
+      <div class="section-controls">
+        <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
+        <button class="btn btn-primary btn-sm edit-section" title="Edit Section">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-success btn-sm copy-section" title="Copy Section">
+          <i class="fas fa-copy"></i>
+        </button>
+        <button class="btn btn-danger btn-sm delete-section" title="Delete Section">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+      <div class="section-content">{{{content}}}</div>
+    </div>
+  </script>
+  <script>
+    console.log('website-builder.js script loaded');
+    console.log('Styles in head:', document.head.innerHTML);
+    console.log('Drag handle styles:', window.getComputedStyle(document.querySelector('.drag-handle')));
+  </script>
+  <div id="spinner" class="spinner-overlay" style="display: none;">
+    <div class="spinner"></div>
+  </div>
+  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body"></div>
+  </div>
+  <div id="welcomeOverlay" class="welcome-overlay">
+    <div class="welcome-message" style="background-color: rgba(0, 0, 0, 0.8); color: white;">
+      <h2>Welcome to the <%= website.name %> Website Builder!</h2>
+      <p>Click anywhere to start creating your amazing website.</p>
+    </div>
+  </div>
+</body>
+</html>

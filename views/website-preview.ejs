@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= page.name %> - <%= website.name %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    <%- website.header.css %>
+    <%- website.footer.css %>
+    <% page.sections.forEach(section => { %>
+      <%- section.css %>
+    <% }) %>
+  </style>
+</head>
+<body>
+  <script>
+    console.log('Page content before rendering:', <%- JSON.stringify(page) %>);
+    console.log('Website content before rendering:', <%- JSON.stringify(website) %>);
+  </script>
+  <header class="container-fluid">
+    <%- website.header.content %>
+  </header>
+
+  <main class="container-fluid">
+    <% page.sections.forEach(section => { %>
+      <section id="<%= section.sectionReference %>">
+        <%- section.content %>
+      </section>
+    <% }) %>
+  </main>
+
+  <footer class="container-fluid">
+    <%- website.footer.content %>
+  </footer>
+
+  <script>
+    console.log('All sections rendered. Checking for relative links...');
+    document.querySelectorAll('a').forEach(link => {
+      console.log('Found link:', link.href);
+    });
+  </script>
+
+  <script>
+  (function() {
+    const baseUrl = '/websites/<%= website._id %>/preview/';
+    const pageMapping = {
+      <% pages.forEach(function(page) { %>
+        '<%= page.slug %>': '<%= page._id %>',
+      <% }); %>
+    };
+    document.querySelectorAll('a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('/') && !href.startsWith(baseUrl)) {
+        const pageSlug = href === '/' ? '/' : href.split('/').pop();
+        const pageId = pageMapping[pageSlug] || pageSlug;
+        link.setAttribute('href', baseUrl + pageId);
+      }
+    });
+  })();
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

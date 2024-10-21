@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<link rel="stylesheet" href="/css/pages.css">
+<body>
+  <%- include('partials/_header.ejs') %>
+  <div class="container mt-4">
+    <h1 class="text-center mb-4"><%= website.name %> - Pages</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Add New Page</h2>
+            <form action="/websites/<%= website._id %>/pages" method="POST" id="addPageForm">
+              <div class="mb-3">
+                <input type="text" class="form-control" name="name" placeholder="Page Name" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" name="slug" placeholder="Slug" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" name="seoTitle" placeholder="SEO Title">
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" name="seoDescription" placeholder="SEO Description">
+              </div>
+              <button type="submit" class="btn btn-primary">Add Page</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Tips</h2>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Set your home page by using the slug '/'</li>
+              <li class="list-group-item">Use descriptive slugs for better SEO</li>
+              <li class="list-group-item">Keep your page names concise and clear</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="mt-4 mb-3">Existing Pages</h2>
+    <div class="row" id="pagesList">
+      <% website.pages.forEach(page => { %>
+        <div class="col-md-6 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title"><%= page.name %></h3>
+              <p class="card-text">Slug: <%= page.slug %></p>
+              <div class="btn-group" role="group">
+                <a href="/websites/<%= website._id %>/pages/<%= page._id %>/edit" class="btn btn-secondary">Edit</a>
+                <a href="/builder/<%= website._id %>?page=<%= page._id %>" class="btn btn-primary">Quick Edit</a>
+                <button class="btn btn-danger delete-page" data-website-id="<%= website._id %>" data-page-id="<%= page._id %>">Delete</button>
+                <a href="/websites/<%= website._id %>/preview/<%= page._id %>" class="btn btn-info" target="_blank">Preview</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+  <%- include('partials/_footer.ejs') %>
+  <script src="/js/pages.js"></script>
+</body>
+</html>
