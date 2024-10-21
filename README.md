@@ -116,7 +116,3 @@ PythaPress/
 
 5. **Access the application:**
    - Open your browser and navigate to `http://localhost:3000`.
-
-### License
-
-The project is proprietary (not open source). © 2024 Pythagora Chatbots. All rights reserved.
