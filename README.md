@@ -1,4 +1,3 @@
-```markdown
 # PythaPress
 
 PythaPress is a web application that enables registered users to build and organize multiple websites by interacting with a Large Language Model (LLM) in natural language, in real-time. Users can create, edit, and manage website sections and templates, all while previewing their changes live.
@@ -25,7 +24,6 @@ PythaPress leverages the Node.js, Express, and MongoDB stack to provide a robust
 
 ### Project Structure:
 
-```
 PythaPress/
 ├── models/
 │   ├── Page.js
@@ -72,7 +70,6 @@ PythaPress/
 ├── .env.example
 ├── package.json
 └── server.js
-```
 
 ## Features
 
@@ -122,5 +119,4 @@ PythaPress/
 
 ### License
 
-The project is proprietary (not open source). Copyright (c) 2024.
-```
+The project is proprietary (not open source). © 2024 Pythagora Chatbots. All rights reserved.
