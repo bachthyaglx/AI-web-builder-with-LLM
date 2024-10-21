@@ -116,3 +116,9 @@ PythaPress/
 
 5. **Access the application:**
    - Open your browser and navigate to `http://localhost:3000`.
+
+### License
+
+The project is open source, licensed under the MIT License. See the [LICENSE](LICENSE).
+
+Copyright © 2024 Pythagora-io. 
