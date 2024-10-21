@@ -23,7 +23,7 @@ PythaPress leverages the Node.js, Express, and MongoDB stack to provide a robust
 - **jQuery**: JavaScript library for DOM manipulation.
 
 ### Project Structure:
-
+```
 PythaPress/
 ├── models/
 │   ├── Page.js
@@ -70,7 +70,7 @@ PythaPress/
 ├── .env.example
 ├── package.json
 └── server.js
-
+```
 ## Features
 
 - **Website Builder**: Create, edit, and delete sections of a website in real-time using natural language.
