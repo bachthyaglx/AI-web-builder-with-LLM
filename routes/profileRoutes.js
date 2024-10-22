@@ -4,34 +4,36 @@ const User = require('../models/User');
 const { isAuthenticated } = require('./middleware/authMiddleware');
 const { validateApiKey } = require('../services/openaiService');
 
-router.get('/profile', isAuthenticated, (req, res) => {
-  res.render('profile', { user: req.user, message: null, error: null });
+router.get('/profile', isAuthenticated, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId);
+    res.render('profile', { user, message: null, error: null });
+  } catch (error) {
+    console.error('Error fetching profile:', error.message, error.stack);
+    res.status(500).send('Error fetching profile');
+  }
 });
 
 router.post('/profile', isAuthenticated, async (req, res) => {
   try {
-    const { openaiApiKey } = req.body;
+    const { openaiApiKey, email } = req.body;
+    const updates = {};
+    if (email) updates.email = email;
 
-    if (!openaiApiKey || openaiApiKey.trim() === '') {
-      return res.render('profile', { user: req.user, message: null, error: 'API key cannot be empty.' });
+    if (openaiApiKey && openaiApiKey.trim() !== '') {
+      const validationResult = await validateApiKey(openaiApiKey);
+      if (validationResult.isValid) {
+        updates.openaiApiKey = openaiApiKey;
+      } else {
+        return res.render('profile', { user: req.user, message: null, error: validationResult.message });
+      }
     }
 
-    if (openaiApiKey === '*'.repeat(32)) {
-      return res.render('profile', { user: req.user, message: 'No changes made to API key.', error: null });
-    }
-
-    const validationResult = await validateApiKey(openaiApiKey);
-
-    if (validationResult.isValid) {
-      await User.findByIdAndUpdate(req.user._id, { openaiApiKey });
-      req.user.openaiApiKey = openaiApiKey;
-      res.render('profile', { user: req.user, message: 'API key saved successfully.', error: null });
-    } else {
-      res.render('profile', { user: req.user, message: null, error: validationResult.message });
-    }
+    await User.findByIdAndUpdate(req.session.userId, updates);
+    res.redirect('/profile');
   } catch (error) {
-    console.error('Error saving API key:', error.message, error.stack);
-    res.render('profile', { user: req.user, message: null, error: 'An unexpected error occurred. Please try again later.' });
+    console.error('Error updating profile:', error.message, error.stack);
+    res.status(500).send('Error updating profile');
   }
 });
 

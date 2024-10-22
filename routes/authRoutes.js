@@ -1,7 +1,7 @@
 const express = require('express');
+const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const router = express.Router();
 
 router.get('/auth/register', (req, res) => {
   res.render('register');
@@ -9,13 +9,14 @@ router.get('/auth/register', (req, res) => {
 
 router.post('/auth/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    // User model will automatically hash the password using bcrypt
-    await User.create({ username, password });
+    const { email, password } = req.body;
+    const user = new User({ email, password });
+    await user.save();
+    req.session.userId = user._id;
     res.redirect('/auth/login');
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).send(error.message);
+    console.error('Error registering user:', error);
+    res.status(400).send('Error registering user');
   }
 });
 
@@ -25,29 +26,25 @@ router.get('/auth/login', (req, res) => {
 
 router.post('/auth/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(400).send('User not found');
-    }
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (isMatch) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user && await bcrypt.compare(password, user.password)) {
       req.session.userId = user._id;
-      return res.redirect('/');
+      res.redirect('/');
     } else {
-      return res.status(400).send('Password is incorrect');
+      res.status(400).send('Invalid email or password');
     }
   } catch (error) {
-    console.error('Login error:', error);
-    return res.status(500).send(error.message);
+    console.error('Error logging in:', error);
+    res.status(400).send('Error logging in');
   }
 });
 
 router.get('/auth/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
-      console.error('Error during session destruction:', err); // gpt_pilot_debugging_log
-      return res.status(500).send('Error logging out');
+      console.error('Unable to log out:', err);
+      return res.status(400).send('Unable to log out');
     }
     res.redirect('/auth/login');
   });
